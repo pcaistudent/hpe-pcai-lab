@@ -39,7 +39,7 @@ dag = DAG(
             False, type="boolean", description="Whether to use SSL for S3 endpoint"
         ),
         "s3_bucket": Param(
-            "sxx-ezaf-demo", type="string", description="S3 bucket to pull binary data from"
+            "s08-ezaf-demo", type="string", description="S3 bucket to pull binary data from"
         ),
         "s3_path": Param(
             "data/mnist",
@@ -54,7 +54,7 @@ dag = DAG(
         ),
     },
     render_template_as_native_obj=True,
-    access_control={"Admin": {"can_read"},"my_name": {"can_read","can_edit","can_delete"}},
+    access_control={"Admin": {"can_read"},"student1032.08-hpelabsonline.com": {"can_read","can_edit","can_delete"}},
 )
 
 submit = SparkKubernetesOperator(
