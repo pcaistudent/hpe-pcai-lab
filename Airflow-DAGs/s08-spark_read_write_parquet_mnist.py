@@ -54,7 +54,6 @@ dag = DAG(
         ),
     },
     render_template_as_native_obj=True,
-    access_control={"All": {"can_read", "can_edit", "can_delete"}},
 )
 
 submit = SparkKubernetesOperator(
