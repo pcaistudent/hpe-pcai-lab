@@ -20,7 +20,7 @@ default_args = {
 }
 
 dag = DAG(
-    "spark_read_write_parquet_mnist",
+    "S08-spark_read_write_parquet_mnist",
     default_args=default_args,
     schedule_interval=None,
     tags=["e2e example", "ezaf", "spark", "parquet", "mnist"],
@@ -39,7 +39,7 @@ dag = DAG(
             False, type="boolean", description="Whether to use SSL for S3 endpoint"
         ),
         "s3_bucket": Param(
-            "sxx-ezaf-demo", type="string", description="S3 bucket to pull binary data from"
+            "seat-xx", type="string", description="S3 bucket to pull binary data from"
         ),
         "s3_path": Param(
             "data/mnist",
