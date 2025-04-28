@@ -22,7 +22,7 @@ spec:
   arguments:
     - s3a://{{dag_run.conf["s3_bucket"]}}/{{dag_run.conf["s3_path"]}}
     - binaryFile
-    - file:///mounts/shared-volume/shared/{{dag_run.conf["export_path"]}}
+    - file:///user-volume/{{dag_run.conf["export_path"]}}
     - parquet
   restartPolicy:
     type: Never
@@ -47,7 +47,12 @@ spec:
     volumeMounts:
       - name: shared-volume
         mountPath: /mounts/shared-volume/shared
+      - name: user-volume
+        mountPath: /mounts/user-volume
     volumes:
       - name: shared-volume
         persistentVolumeClaim:
           claimName: kubeflow-shared-pvc
+      - name: user-volume
+        persistentVolumeClaim: 
+          claimName: user-pvc
