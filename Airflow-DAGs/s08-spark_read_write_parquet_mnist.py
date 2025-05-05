@@ -87,6 +87,7 @@ datamove = KubernetesPodOperator(
     cmds=["python /mnt/user/Airflow/data-move.py {{dag_run.conf['export_path']}} {{dag_run.conf['export_path_2']}}"],
     volumes = [userVol],
     volume_mounts = [userVolMount],
+    annotations = {"hpe-ezua/add-auth-token": "true"}
     dag=dag,
 )
 
