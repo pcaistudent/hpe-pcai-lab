@@ -63,8 +63,8 @@ dag = DAG(
     access_control={"Admin": {"can_read","can_edit","can_delete"}},
 )
 
-spark-parquet = SparkKubernetesOperator(
-    task_id="spark-parquet",
+submit = SparkKubernetesOperator(
+    task_id="spark submit",
     application_file="example_ezaf_spark_mnist.yaml",
     # do_xcom_push=True,
     delete_on_termination=False,
@@ -72,8 +72,8 @@ spark-parquet = SparkKubernetesOperator(
     enable_impersonation_from_ldap_user=True,
 )
 
-data-move = KubernetesOperator(
-    task_id="data-move",
+datamove = KubernetesOperator(
+    task_id="data move",
     image="beatbox",
     cmds=["python /mnt/user/Airflow/data-move.py {{dag_run.conf['export_path']}} {{dag_run.conf['export_path_2']}}"]
     volume_mount = k8s.V1VolumeMount(
@@ -94,4 +94,4 @@ data-move = KubernetesOperator(
 #     attach_log=True,
 # )
 
- spark-parquet >> data-move
+ submit >> datamove
