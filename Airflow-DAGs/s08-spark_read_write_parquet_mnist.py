@@ -10,6 +10,7 @@ from airflow.providers.cncf.kubernetes.operators.pod import (
     KubernetesPodOperator,
 )
 from airflow.utils.dates import days_ago
+from kubernetes.client import models as k8s
 
 default_args = {
     "owner": "airflow",
@@ -23,7 +24,7 @@ default_args = {
 }
 
 dag = DAG(
-    "sxx-spark_read_write_parquet_mnist",
+    "s08-spark_read_write_parquet_mnist",
     default_args=default_args,
     schedule_interval=None,
     tags=["e2e example", "ezaf", "spark", "parquet", "mnist"],
@@ -42,7 +43,7 @@ dag = DAG(
             False, type="boolean", description="Whether to use SSL for S3 endpoint"
         ),
         "s3_bucket": Param(
-            "seat-xx", type="string", description="S3 bucket to pull binary data from"
+            "seat08", type="string", description="S3 bucket to pull binary data from"
         ),
         "s3_path": Param(
             "data/mnist",
