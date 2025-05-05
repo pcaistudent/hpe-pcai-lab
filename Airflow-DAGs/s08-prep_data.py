@@ -90,6 +90,7 @@ datamove = KubernetesPodOperator(
     volume_mounts = [userVolMount],
     annotations = {"hpe-ezua/add-auth-token": "true"},
     dag=dag,
+    enable_impersonation_from_ldap_user=True,
 )
 
 # sensor = SparkKubernetesSensor(

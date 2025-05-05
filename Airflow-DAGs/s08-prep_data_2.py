@@ -98,6 +98,7 @@ datamove = PythonOperator(
     python_callable=data_move,
     op_kwargs={"source":"{{dag_run.conf['export_path']}}", "dest":"{{dag_run.conf['export_path_2']}}"},
     dag=dag,
+    enable_impersonation_from_ldap_user=True,
 )
 
 # sensor = SparkKubernetesSensor(
