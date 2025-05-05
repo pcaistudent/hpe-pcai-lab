@@ -38,7 +38,7 @@ spec:
       - name: shared-volume
         mountPath: /mounts/shared-volume/shared
       - name: user-volume
-        mountPath: /mounts/user-volume
+        mountPath: /mounts/shared-volume/user
   executor:
     cores: 1
     coreLimit: "2000m"
@@ -50,7 +50,7 @@ spec:
       - name: shared-volume
         mountPath: /mounts/shared-volume/shared
       - name: user-volume
-        mountPath: /mounts/user-volume
+        mountPath: /mounts/shared-volume/user
     volumes:
       - name: shared-volume
         persistentVolumeClaim:
