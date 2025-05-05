@@ -75,18 +75,19 @@ submit = SparkKubernetesOperator(
     dag=dag,
     enable_impersonation_from_ldap_user=True,
 )
-
+userVolMount = k8s.V1VolumeMount(
+    name="user-volume", mount_path="/mnt/usr", sub_path=None, read_only=True
+    )
+userVol = k8s.V1Volume(
+    name="user-volume",
+    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name="user-pvc"),
+    )
 datamove = KubernetesPodOperator(
     task_id="data_move",
     image="beatbox",
     cmds=["python /mnt/user/Airflow/data-move.py {{dag_run.conf['export_path']}} {{dag_run.conf['export_path_2']}}"],
-    volume_mount = k8s.V1VolumeMount(
-    name="user-volume", mount_path="/mnt/usr", sub_path=None, read_only=True
-    ),
-    volume = k8s.V1Volume(
-    name="user-volume",
-    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name="user-pvc"),
-    ),
+    volumes = [userVol],
+    volume_mounts = [userVolMount],
     delete_on_termination=True,
     dag=dag,
 )
