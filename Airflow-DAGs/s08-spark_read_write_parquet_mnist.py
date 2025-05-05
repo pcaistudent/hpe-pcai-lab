@@ -64,7 +64,7 @@ dag = DAG(
 )
 
 submit = SparkKubernetesOperator(
-    task_id="spark submit",
+    task_id="spark_submit",
     application_file="example_ezaf_spark_mnist.yaml",
     # do_xcom_push=True,
     delete_on_termination=False,
@@ -73,7 +73,7 @@ submit = SparkKubernetesOperator(
 )
 
 datamove = KubernetesOperator(
-    task_id="data move",
+    task_id="data_move",
     image="beatbox",
     cmds=["python /mnt/user/Airflow/data-move.py {{dag_run.conf['export_path']}} {{dag_run.conf['export_path_2']}}"],
     volume_mount = k8s.V1VolumeMount(
