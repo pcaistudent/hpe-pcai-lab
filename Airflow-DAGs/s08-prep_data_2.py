@@ -96,7 +96,7 @@ submit = SparkKubernetesOperator(
 datamove = PythonOperator(
     task_id="data_move",
     python_callable=data_move,
-    op_kwargs={"source":"{{dag_run.conf['export_path']}}", "dest":"{{dag_run.conf['export_path_2']}}"],
+    op_kwargs={"source":"{{dag_run.conf['export_path']}}", "dest":"{{dag_run.conf['export_path_2']}}"},
     dag=dag,
 )
 
