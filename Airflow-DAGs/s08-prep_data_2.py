@@ -6,11 +6,11 @@ from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import (
 from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import (
     SparkKubernetesSensor,
 )
-from airflow.providers.cncf.kubernetes.operators.pod import (
-    KubernetesPodOperator,
+from airflow.operators.python_operator import PythonOperator
 )
 from airflow.utils.dates import days_ago
-from kubernetes.client import models as k8s
+import pandas as pd
+import os
 
 default_args = {
     "owner": "airflow",
@@ -23,6 +23,25 @@ default_args = {
     "retries": 0,
 }
 
+def data_move(**kwargs):
+    source=kwargs["source"]
+    dest=kwargs["dest"]
+    print("Initial training data folder is: "+source)
+    if not os.path.exists(dest):
+        os.makedirs(dest)
+        print("created "+dest)
+    with open(dest + "/train-images-idx3-ubyte.gz", 'wb') as f1, \
+        open(dest + "/t10k-images-idx3-ubyte.gz", 'wb') as f2, \
+        open(dest + "/train-labels-idx1-ubyte.gz", 'wb') as f3, \
+        open(dest + "/t10k-labels-idx1-ubyte.gz", 'wb') as f4:
+            mnist_parquet = pd.read_parquet(source)
+            x_train, x_test, y_train, y_test = mnist_parquet["content"]
+            f1.write(x_train)
+            f2.write(x_test)
+            f3.write(y_train)
+            f4.write(y_test)
+    print("Wrote files to "+dest)
+    
 dag = DAG(
     "s08-prep_data",
     default_args=default_args,
@@ -74,21 +93,11 @@ submit = SparkKubernetesOperator(
     dag=dag,
     enable_impersonation_from_ldap_user=True,
 )
-userVolMount = k8s.V1VolumeMount(
-    name="user-volume", mount_path="/mnt/user", sub_path=None, read_only=True
-    )
-userVol = k8s.V1Volume(
-    name="user-volume",
-    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name="user-pvc"),
-    )
-datamove = KubernetesPodOperator(
+
+datamove = PythonOperator(
     task_id="data_move",
-    image="busybox",
-    cmds=["/bin/sh"],
-    arguments=["sleep 30" "/mnt/user/Airflow/data-move.py {{dag_run.conf['export_path']}} {{dag_run.conf['export_path_2']}}"],
-    volumes = [userVol],
-    volume_mounts = [userVolMount],
-    annotations = {"hpe-ezua/add-auth-token": "true"},
+    python_callable=data_move,
+    op_kwargs={"source":"{{dag_run.conf['export_path']}}", "dest":"{{dag_run.conf['export_path_2']}}"],
     dag=dag,
 )
 
