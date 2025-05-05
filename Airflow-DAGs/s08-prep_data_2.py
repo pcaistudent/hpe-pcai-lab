@@ -7,7 +7,6 @@ from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import (
     SparkKubernetesSensor,
 )
 from airflow.operators.python_operator import PythonOperator
-)
 from airflow.utils.dates import days_ago
 import pandas as pd
 import os
