@@ -72,7 +72,7 @@ submit = SparkKubernetesOperator(
     enable_impersonation_from_ldap_user=True,
 )
 
-datamove = KubernetesOperator(
+datamove = KubernetesPodOperator(
     task_id="data_move",
     image="beatbox",
     cmds=["python /mnt/user/Airflow/data-move.py {{dag_run.conf['export_path']}} {{dag_run.conf['export_path_2']}}"],
