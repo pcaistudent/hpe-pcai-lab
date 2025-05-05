@@ -75,14 +75,14 @@ submit = SparkKubernetesOperator(
 datamove = KubernetesOperator(
     task_id="data move",
     image="beatbox",
-    cmds=["python /mnt/user/Airflow/data-move.py {{dag_run.conf['export_path']}} {{dag_run.conf['export_path_2']}}"]
+    cmds=["python /mnt/user/Airflow/data-move.py {{dag_run.conf['export_path']}} {{dag_run.conf['export_path_2']}}"],
     volume_mount = k8s.V1VolumeMount(
     name="user-volume", mount_path="/mnt/usr", sub_path=None, read_only=True
-    )
+    ),
     volume = k8s.V1Volume(
     name="user-volume",
     persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name="user-pvc"),
-    )
+    ),
     delete_on_termination=True,
     dag=dag,
 )
