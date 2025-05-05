@@ -59,7 +59,6 @@ dag = DAG(
         "export_path_2": Param(
             "/Airflow/mnist-data",
             type=["null", "string"],
-            pattern=r"^$|^\S+/$",
             description="The final directory with the mnist files",
         ),
     },
