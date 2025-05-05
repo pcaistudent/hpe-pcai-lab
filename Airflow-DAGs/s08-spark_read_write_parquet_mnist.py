@@ -30,7 +30,7 @@ dag = DAG(
     tags=["e2e example", "ezaf", "spark", "parquet", "mnist"],
     params={
         "export_path": Param(
-            "/Airflow/parquet-data",
+            "Airflow/parquet-data",
             type="string",
             description="Path to folder on user volume to export processed data for further training",
         ),
@@ -57,7 +57,7 @@ dag = DAG(
             description="Airgap registry url. Trailing slash in the end is required",
         ),
         "export_path_2": Param(
-            "/Airflow/mnist-data",
+            "Airflow/mnist-data",
             type=["null", "string"],
             description="The final directory with the mnist files",
         ),
