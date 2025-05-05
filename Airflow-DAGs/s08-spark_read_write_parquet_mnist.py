@@ -20,13 +20,13 @@ default_args = {
 }
 
 dag = DAG(
-    "S08-spark_read_write_parquet_mnist",
+    "sxx-spark_read_write_parquet_mnist",
     default_args=default_args,
     schedule_interval=None,
     tags=["e2e example", "ezaf", "spark", "parquet", "mnist"],
     params={
         "export_path": Param(
-            "mnist-spark-data",
+            "/Airflow/parquet-data",
             type="string",
             description="Path to folder on user volume to export processed data for further training",
         ),
@@ -52,18 +52,39 @@ dag = DAG(
             pattern=r"^$|^\S+/$",
             description="Airgap registry url. Trailing slash in the end is required",
         ),
+        "export_path_2": Param(
+            "/Airflow/mnist-data",
+            type=["null", "string"],
+            pattern=r"^$|^\S+/$",
+            description="The final directory with the mnist files",
+        ),
     },
     render_template_as_native_obj=True, 
     access_control={"Admin": {"can_read","can_edit","can_delete"}},
 )
 
-submit = SparkKubernetesOperator(
-    task_id="submit",
+spark-parquet = SparkKubernetesOperator(
+    task_id="spark-parquet",
     application_file="example_ezaf_spark_mnist.yaml",
     # do_xcom_push=True,
     delete_on_termination=False,
     dag=dag,
     enable_impersonation_from_ldap_user=True,
+)
+
+data-move = KubernetesOperator(
+    task_id="data-move",
+    image="beatbox",
+    cmds=["python /mnt/user/Airflow/data-move.py "{{dag_run.conf["export_path"]}}" "{{dag_run.conf["export_path_2"]}}"]
+    volume_mount = k8s.V1VolumeMount(
+    name="user-volume", mount_path="/mnt/usr", sub_path=None, read_only=True
+    )
+    volume = k8s.V1Volume(
+    name="user-volume",
+    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name="user-pvc"),
+    )
+    delete_on_termination=True,
+    dag=dag,
 )
 
 # sensor = SparkKubernetesSensor(
@@ -73,4 +94,4 @@ submit = SparkKubernetesOperator(
 #     attach_log=True,
 # )
 
-# submit >> sensor
+ spark-parquet >> data-move
