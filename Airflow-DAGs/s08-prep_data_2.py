@@ -42,7 +42,7 @@ def data_move(**kwargs):
     print("Wrote files to "+dest)
     
 dag = DAG(
-    "s08-prep_data",
+    "s08-prep_data_2",
     default_args=default_args,
     schedule_interval=None,
     tags=["e2e example", "ezaf", "spark", "parquet", "mnist"],
