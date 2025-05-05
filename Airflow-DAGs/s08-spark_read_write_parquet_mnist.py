@@ -75,7 +75,7 @@ submit = SparkKubernetesOperator(
     enable_impersonation_from_ldap_user=True,
 )
 userVolMount = k8s.V1VolumeMount(
-    name="user-volume", mount_path="/mnt/usr", sub_path=None, read_only=True
+    name="user-volume", mount_path="/mnt/user", sub_path=None, read_only=True
     )
 userVol = k8s.V1Volume(
     name="user-volume",
