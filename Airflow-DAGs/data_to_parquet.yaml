@@ -1,7 +1,7 @@
 apiVersion: "sparkoperator.hpe.com/v1beta2"
 kind: SparkApplication
 metadata:
-  name: spark-data_to_parquet-{{ts_nodash|replace("T", "")}}
+  name: spark-parquet-{{ts_nodash|replace("T", "")}}
 spec:
   sparkConf:
     spark.driver.extraJavaOptions: "-Dcom.amazonaws.sdk.disableCertChecking=true"
