@@ -6,6 +6,9 @@ from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import (
 from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import (
     SparkKubernetesSensor,
 )
+from airflow.providers.cncf.kubernetes.operators.pod import (
+    KubernetesPodOperator,
+)
 from airflow.utils.dates import days_ago
 
 default_args = {
