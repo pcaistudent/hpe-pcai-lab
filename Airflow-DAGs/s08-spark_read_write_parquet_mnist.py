@@ -94,4 +94,4 @@ datamove = KubernetesOperator(
 #     attach_log=True,
 # )
 
- submit >> datamove
+submit >> datamove
