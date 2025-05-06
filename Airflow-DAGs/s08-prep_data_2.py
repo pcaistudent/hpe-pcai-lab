@@ -26,14 +26,18 @@ def data_move(**kwargs):
     source=kwargs["source"]
     dest=kwargs["dest"]
     print("Initial training data folder is: "+source+" and it has these files")
-    for i in os.path.listdir(source):
-        print(i)
+    for (root, dirs, file) in os.walk(source):
+    for f in file:
+        if '.txt' in f:
+            print(f)
 #    if not os.path.exists(dest):
 #        os.makedirs(dest)
 #        print("created "+dest)
     print("Final training data folder is: "+dest+" and it has these files")
-    for i in os.path.listdir(dest):
-        print(i)
+    for (root, dirs, file) in os.walk(dest):
+      for f in file:
+        if '.txt' in f:
+            print(f)
     with open(dest + "/train-images-idx3-ubyte.gz", 'wb') as f1, \
         open(dest + "/t10k-images-idx3-ubyte.gz", 'wb') as f2, \
         open(dest + "/train-labels-idx1-ubyte.gz", 'wb') as f3, \
