@@ -69,7 +69,7 @@ dag = DAG(
 submit = SparkKubernetesOperator(
     task_id="spark_submit",
     application_file="data_to_parquet.yaml",
-    # do_xcom_push=True,
+    do_xcom_push=True,
     delete_on_termination=False,
     dag=dag,
     enable_impersonation_from_ldap_user=True,
@@ -89,11 +89,11 @@ datamove = KubernetesPodOperator(
     dag=dag,
 )
 
-# sensor = SparkKubernetesSensor(
-#     task_id="monitor",
-#     application_name="{{ task_instance.xcom_pull(task_ids='submit')['metadata']['name'] }}",
-#     dag=dag,
-#     attach_log=True,
-# )
+ sensor = SparkKubernetesSensor(
+     task_id="monitor",
+     application_name="{{ task_instance.xcom_pull(task_ids='submit')['metadata']['name'] }}",
+     dag=dag,
+     attach_log=True,
+ )
 
-submit >> datamove
+submit >> sensor
