@@ -25,10 +25,15 @@ default_args = {
 def data_move(**kwargs):
     source=kwargs["source"]
     dest=kwargs["dest"]
-    print("Initial training data folder is: "+source)
+    print("Initial training data folder is: "+source+" and it has these files")
+    for i in os.path.dir(source):
+        print(i)
 #    if not os.path.exists(dest):
 #        os.makedirs(dest)
 #        print("created "+dest)
+    print("Final training data folder is: "+dest+" and it has these files")
+    for i in os.path.dir(dest):
+        print(i)
     with open(dest + "/train-images-idx3-ubyte.gz", 'wb') as f1, \
         open(dest + "/t10k-images-idx3-ubyte.gz", 'wb') as f2, \
         open(dest + "/train-labels-idx1-ubyte.gz", 'wb') as f3, \
