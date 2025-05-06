@@ -98,7 +98,6 @@ datamove = PythonOperator(
     python_callable=data_move,
     op_kwargs={"source":"mnt/user/{{dag_run.conf['export_path']}}", "dest":"mst/user/{{dag_run.conf['export_path_2']}}"},
     dag=dag,
-    run_as_user="student1032.08-hpelabsonline.com",
 )
 
 # sensor = SparkKubernetesSensor(
