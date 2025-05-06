@@ -27,7 +27,7 @@ def data_move(**kwargs):
     dest=kwargs["dest"]
     print("Initial training data folder is: "+source+" and it has these files")
     for (root, dirs, file) in os.walk(source):
-    for f in file:
+      for f in file:
         if '.txt' in f:
             print(f)
 #    if not os.path.exists(dest):
