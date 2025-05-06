@@ -88,12 +88,10 @@ datamove = KubernetesPodOperator(
     image_pull_secrets = "hpe-imagepull-secrets",
     dag=dag,
 )
-
- sensor = SparkKubernetesSensor(
-     task_id="monitor",
-     application_name="{{ task_instance.xcom_pull(task_ids='submit')['metadata']['name'] }}",
-     dag=dag,
-     attach_log=True,
- )
-
+sensor = SparkKubernetesSensor(
+    task_id="monitor",
+    application_name="{{ task_instance.xcom_pull(task_ids='submit')['metadata']['name'] }}",
+    dag=dag,
+    attach_log=True,
+)
 submit >> sensor
