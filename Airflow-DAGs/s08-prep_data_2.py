@@ -26,9 +26,9 @@ def data_move(**kwargs):
     source=kwargs["source"]
     dest=kwargs["dest"]
     print("Initial training data folder is: "+source)
-    if not os.path.exists(dest):
-        os.makedirs(dest)
-        print("created "+dest)
+#    if not os.path.exists(dest):
+#        os.makedirs(dest)
+#        print("created "+dest)
     with open(dest + "/train-images-idx3-ubyte.gz", 'wb') as f1, \
         open(dest + "/t10k-images-idx3-ubyte.gz", 'wb') as f2, \
         open(dest + "/train-labels-idx1-ubyte.gz", 'wb') as f3, \
@@ -98,6 +98,7 @@ datamove = PythonOperator(
     python_callable=data_move,
     op_kwargs={"source":"mnt/user/{{dag_run.conf['export_path']}}", "dest":"mst/user/{{dag_run.conf['export_path_2']}}"},
     dag=dag,
+#    run_as_user="student1032.08-hpelabsonline.com",
 )
 
 # sensor = SparkKubernetesSensor(
