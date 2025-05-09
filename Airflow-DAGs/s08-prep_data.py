@@ -74,20 +74,7 @@ submit = SparkKubernetesOperator(
     dag=dag,
     enable_impersonation_from_ldap_user=True,
 )
-datamove = KubernetesPodOperator(
-    task_id="data-move",
-    image="gcr.io/mapr-252711/kubeflow/notebooks/jupyter-scipy:ezua-1.6.1-b32915fa",
-    cmds=["python","/mnt/user/Airflow/data-move.py]}}","/mnt/user/{{dag_run.conf['export_path']}}","/mnt/user/{{dag_run.conf['export_path_2']}}"],
-    volume_mounts = [k8s.V1VolumeMount(
-    name="user-volume", mount_path="/mnt/user", read_only=False
-    )],
-    volumes = [k8s.V1Volume(
-    name="user-volume",
-    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name="user-pvc"),
-    )],
-    image_pull_secrets = "hpe-imagepull-secrets",
-    dag=dag,
-)
+
 sensor = SparkKubernetesSensor(
     task_id="monitor",
     application_name="{{ task_instance.xcom_pull(task_ids='submit')['metadata']['name'] }}",
