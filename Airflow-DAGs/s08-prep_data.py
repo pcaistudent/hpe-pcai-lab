@@ -56,11 +56,6 @@ dag = DAG(
             pattern=r"^$|^\S+/$",
             description="Airgap registry url. Trailing slash in the end is required",
         ),
-        "export_path_2": Param(
-            "Airflow/mnist-data",
-            type=["null", "string"],
-            description="The final directory with the mnist files",
-        ),
     },
     render_template_as_native_obj=True, 
     access_control={"Admin": {"can_read","can_edit","can_delete"}},
