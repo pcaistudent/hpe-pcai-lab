@@ -58,13 +58,13 @@ dag = DAG(
         ),
     },
     render_template_as_native_obj=True, 
-    access_control={"Admin": {"can_read","can_edit","can_delete"}},
+    access_control={"Admin": {"can_read"},"Admin.student1032.08-hpelabsonline.com":{"can_read","can_edit","can_delete"}},
 )
 
 submit = SparkKubernetesOperator(
     task_id="spark_submit",
     application_file="data_to_parquet.yaml",
-#   do_xcom_push=True,
+#    do_xcom_push=True,
     delete_on_termination=False,
     dag=dag,
     enable_impersonation_from_ldap_user=True,
