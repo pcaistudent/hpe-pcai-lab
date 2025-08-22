@@ -43,7 +43,7 @@ dag = DAG(
             False, type="boolean", description="Whether to use SSL for S3 endpoint"
         ),
         "s3_bucket": Param(
-            "seatxx", type="string", description="S3 bucket to pull binary data from"
+            "seat14", type="string", description="S3 bucket to pull binary data from"
         ),
         "s3_path": Param(
             "data/mnist",
@@ -51,7 +51,7 @@ dag = DAG(
             description="S3 key to pull binary data from",
         ),
         "airgap_registry_url": Param(
-            "",
+            "10.6.97.45/ezmeral-common/",
             type=["null", "string"],
             pattern=r"^$|^\S+/$",
             description="Airgap registry url. Trailing slash in the end is required",
