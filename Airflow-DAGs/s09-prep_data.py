@@ -24,7 +24,7 @@ default_args = {
 }
 
 dag = DAG(
-    "sxx-prep_data",
+    "s09-prep_data",
     default_args=default_args,
     schedule_interval=None,
     tags=["e2e example", "ezaf", "spark", "parquet", "mnist"],
@@ -76,4 +76,5 @@ submit = SparkKubernetesOperator(
 #    dag=dag,
 #    attach_log=True,
 #)
+
 #submit >> sensor
