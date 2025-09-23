@@ -35,7 +35,7 @@ dag = DAG(
             description="Path to folder on user volume to export processed data for further training",
         ),
         "s3_endpoint": Param(
-            "local-s3-service.ezdata-system.svc.cluster.local:30000",
+            "http://local-s3-service.ezdata-system.svc.cluster.local:30000",
             type="string",
             description="S3 endpoint to pull binary data from",
         ),
@@ -78,4 +78,5 @@ submit = SparkKubernetesOperator(
 #)
 
 #submit >> sensor
+
 
