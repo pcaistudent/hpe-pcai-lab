@@ -58,7 +58,7 @@ dag = DAG(
         ),
     },
     render_template_as_native_obj=True, 
-    access_control={"student1032.09-hpelabsonline.com": {"can_read"},"student1032.09-hpelabsonline.com":{"can_read","can_edit","can_delete"}},
+    access_control={"student1032.09-hpelabsonline.com": {"can_read"},"student1032.09-hpelabsonline.com": {"can_read","can_edit","can_delete"}},
 )
 
 submit = SparkKubernetesOperator(
@@ -78,3 +78,4 @@ submit = SparkKubernetesOperator(
 #)
 
 #submit >> sensor
+
