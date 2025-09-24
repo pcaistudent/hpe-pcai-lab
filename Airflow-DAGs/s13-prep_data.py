@@ -76,5 +76,4 @@ submit = SparkKubernetesOperator(
 #    dag=dag,
 #    attach_log=True,
 #)
-
 #submit >> sensor
