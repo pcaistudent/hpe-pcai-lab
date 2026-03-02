@@ -9,13 +9,12 @@ from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import (
 from airflow.providers.cncf.kubernetes.operators.pod import (
     KubernetesPodOperator,
 )
-from airflow.utils.dates import days_ago
 from kubernetes.client import models as k8s
 
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
-    "start_date": days_ago(1),
+    "start_date": datetime(2026,1,1),
     "email": ["airflow@example.com"],
     "email_on_failure": False,
     "email_on_retry": False,
