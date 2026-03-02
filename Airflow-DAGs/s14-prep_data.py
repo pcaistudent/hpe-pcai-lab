@@ -10,7 +10,7 @@ from airflow.providers.cncf.kubernetes.operators.pod import (
     KubernetesPodOperator,
 )
 from kubernetes.client import models as k8s
-from airflow.utils.dates import datetime
+import datetime
 
 default_args = {
     "owner": "airflow",
