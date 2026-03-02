@@ -45,7 +45,7 @@ dag = DAG(
             type="string",
             description="S3 key to pull binary data from",
         ),
-        "airgap_registry_url": Param(
+        "registry_url": Param(
             os.environ.get("AIRGAP_REGISTRY"),
             type=["null", "string"],
             pattern=r"^$|^\S+/$",
