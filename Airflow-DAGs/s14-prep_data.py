@@ -1,21 +1,16 @@
+from __future__ import annotations
+import os
+from datetime import datetime
 from airflow import DAG
 from airflow.models.param import Param
 from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import (
     SparkKubernetesOperator,
 )
-from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import (
-    SparkKubernetesSensor,
-)
-from airflow.providers.cncf.kubernetes.operators.pod import (
-    KubernetesPodOperator,
-)
-from kubernetes.client import models as k8s
-import datetime
 
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
-    "start_date": datetime.datetime(2026,1,1),
+    "start_date": datetime.datetime(2022, 1, 1),
     "email": ["airflow@example.com"],
     "email_on_failure": False,
     "email_on_retry": False,
@@ -26,8 +21,8 @@ default_args = {
 dag = DAG(
     "s14-prep_data",
     default_args=default_args,
-    schedule_interval=None,
-    tags=["e2e example", "ezaf", "spark", "parquet", "mnist"],
+    schedule=None,
+    tags=["examplee", "aie", "spark", "parquet", "mnist"],
     params={
         "export_path": Param(
             "Airflow/parquet-data",
@@ -51,7 +46,7 @@ dag = DAG(
             description="S3 key to pull binary data from",
         ),
         "airgap_registry_url": Param(
-            "10.6.97.45/ezmeral-common/",
+            os.environ.get("AIRGAP_REGISTRY"),
             type=["null", "string"],
             pattern=r"^$|^\S+/$",
             description="Airgap registry url. Trailing slash in the end is required",
@@ -69,11 +64,3 @@ submit = SparkKubernetesOperator(
     dag=dag,
     enable_impersonation_from_ldap_user=True,
 )
-
-#sensor = SparkKubernetesSensor(
-#    task_id="monitor",
-#    application_name="{{ task_instance.xcom_pull(task_ids='submit')['metadata']['name'] }}",
-#    dag=dag,
-#    attach_log=True,
-#)
-#submit >> sensor
