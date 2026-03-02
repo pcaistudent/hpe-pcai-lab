@@ -53,7 +53,7 @@ dag = DAG(
         ),
     },
     render_template_as_native_obj=True, 
-    access_control={"Admin": {"can_read"},"Admin_student1006.03-hpelabsonline.com":{"can_read","can_edit","can_delete"}},
+    access_control={"Admin": {"can_read"},"student1006.03-hpelabsonline.com":{"can_read","can_edit","can_delete"}},
 )
 
 submit = SparkKubernetesOperator(
