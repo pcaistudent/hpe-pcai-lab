@@ -58,7 +58,7 @@ dag = DAG(
 
 submit = SparkKubernetesOperator(
     task_id="spark_submit",
-    application_file="data_to_parquet_b.yaml",
+    application_file="data_to_parquet_v1_11.yaml",
 #    do_xcom_push=True,
     delete_on_termination=False,
     dag=dag,
