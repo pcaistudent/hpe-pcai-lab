@@ -53,7 +53,10 @@ dag = DAG(
         ),
     },
     render_template_as_native_obj=True, 
-    access_control={"Admin": {"can_read","can_edit","can_delete"}},{"user-student1032-11": {"can_read","can_edit","can_delete"}},
+    access_control={
+        "Admin": {"can_read","can_edit","can_delete"},
+        "user-student1032-11": {"can_read","can_edit","can_delete"}
+    },
 )
 
 submit = SparkKubernetesOperator(
@@ -64,4 +67,5 @@ submit = SparkKubernetesOperator(
     dag=dag,
     enable_impersonation_from_ldap_user=True,
 )
+
 
