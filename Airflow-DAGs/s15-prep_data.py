@@ -38,7 +38,7 @@ dag = DAG(
             False, type="boolean", description="Whether to use SSL for S3 endpoint"
         ),
         "s3_bucket": Param(
-            "seatxx", type="string", description="S3 bucket to pull binary data from"
+            "seat15", type="string", description="S3 bucket to pull binary data from"
         ),
         "s3_path": Param(
             "data/mnist",
@@ -53,7 +53,9 @@ dag = DAG(
         ),
     },
     render_template_as_native_obj=True, 
-    access_control={"Admin": {"can_read","can_edit","can_delete"}},
+    access_control={
+        "Admin": {"can_read","can_edit","can_delete"}},
+        "user-student1032-15": {"can_read","can_edit","can_delete"}
 )
 
 submit = SparkKubernetesOperator(
