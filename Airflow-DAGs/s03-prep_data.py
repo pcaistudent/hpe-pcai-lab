@@ -24,7 +24,7 @@ default_args = {
 }
 
 dag = DAG(
-    "s22-prep_data",
+    "s03-prep_data",
     default_args=default_args,
     schedule_interval=None,
     tags=["e2e example", "ezaf", "spark", "parquet", "mnist"],
@@ -58,7 +58,7 @@ dag = DAG(
         ),
     },
     render_template_as_native_obj=True, 
-    access_control={"Admin": {"can_read"},"Admin.student10yy.xx-hpelabsonline.com":{"can_read","can_edit","can_delete"}},
+    access_control={"Admin": {"can_read"},"Admin.student10yy.03-hpelabsonline.com":{"can_read","can_edit","can_delete"}},
 )
 
 submit = SparkKubernetesOperator(
