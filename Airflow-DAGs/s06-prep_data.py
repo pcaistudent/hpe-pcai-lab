@@ -15,7 +15,7 @@ from kubernetes.client import models as k8s
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
-    "start_date": datetime(2026, 1, 1),
+    "start_date": datetime(2026, 4, 1),
     "email": ["airflow@example.com"],
     "email_on_failure": False,
     "email_on_retry": False,
