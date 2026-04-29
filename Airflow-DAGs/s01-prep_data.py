@@ -19,7 +19,7 @@ default_args = {
 }
 
 dag = DAG(
-    "sxx-prep_data",
+    "s01-prep_data",
     default_args=default_args,
     schedule=None,
     tags=["examplee", "aie", "spark", "parquet", "mnist"],
